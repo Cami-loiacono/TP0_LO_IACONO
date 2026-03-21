@@ -1,24 +1,11 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-void ValidarRespuesta(char respuesta, char opcion_1_correcta, char opcion2, char opcion3, char opcion4){
+void ValidarRespuesta(char respuesta_ingresada, char opcion_1, char opcion_2, char opcion_3, char opcion_4){
     bool respuesta_validez = false;
     while(respuesta_validez == false){
-        if(respuesta == opcion_1_correcta){
-            printf("Correcto! +100 puntos.");
-            respuesta_validez == true;
-        }
-        else if(respuesta == opcion2){
-            printf("Incorrecto! Intente devuelta...  -20 puntos");
-            respuesta_validez == true;
-        }
-        else if(respuesta == opcion3){
-            printf("Incorrecto! Intente devuelta... -20 puntos");
-            respuesta_validez == true;
-        }
-        else if(respuesta == opcion4){
-            printf("Incorrecto! Intente devuelta... -20 puntos");
-            respuesta_validez == true;
+        if(respuesta_ingresada != opcion_1 && respuesta_ingresada != opcion_2 && respuesta_ingresada != opcion_3 && respuesta_ingresada !=opcion_4 ){
+            return;
         }
         else{
             printf("Respuesta inválida... Intente devuelta");
@@ -30,13 +17,14 @@ void ValidarRespuesta(char respuesta, char opcion_1_correcta, char opcion2, char
 int main() {
     const MAX_INTENTOS = 3;
     int intentos_del_usuario = 0;
-    char respuesta_usuario = ".";
+    char respuesta_ingresada = ".";
     bool respuesta_validez = true;
+    int puntaje_total_usuario = 0;
     while(intentos_del_usuario <= MAX_INTENTOS){
         printf("¿Quién fundó realmente Springfield?");
-        scanf(" %c", &respuesta_usuario);
-        ValidarRespuesta(respuesta_usuario, "J", "A", "S", "B");
-        
+        scanf(" %c", &respuesta_ingresada);
+        ValidarRespuesta(respuesta_ingresada, 'J', 'A', 'S', 'B');
+        CorregirRespuesta(respuesta_ingresada, 'J', 'A', 'S', 'B');
         
     };
 }
