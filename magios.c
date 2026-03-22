@@ -11,29 +11,42 @@ void Restar_Puntos(int puntaje_negativo_respuesta, int* puntaje_total_usuario){
     *puntaje_total_usuario -= puntaje_negativo_respuesta;
 }
 void Ingreso_Fecha_Formato_Valido(int* anio, int* mes){
-    bool validez = true;
-    while(validez){
-        validez = (scanf("%d/%d", anio, mes)) == 2;
+    bool validez = false;
+    while(!validez){
+        validez = ((scanf("%d/%d", anio, mes)) == 2);
         if(validez == false){
             printf("Debe ingresar dos números validos (año y mes), entre una barra sin espacios! \n");
         }
     }
 }
+
+//Funciones complejas
 void Validar_Rango_Fecha_Ingresada(int* anio, int* mes){
     bool valido = false;
-    Ingreso_Fecha_Valido(anio, mes);
+    const int ANIO_ACTUAL = 2026;
+    const int MES_ACTUAL = 3;
+    const int ANIO_MINIMO_DIGITOS = 1000;
+    const int ANIO_MAXIMO_DIGITOS = 9999;
+    const int ANIO_MINIMO = 1926;
+    const int MES_MINIMO_ANIO = 3;
+
     while(!valido){
-        if(*anio > 9999 || *anio < 1000 || (*anio < 1926 && *mes < 3) || *anio < 1926){
+        Ingreso_Fecha_Formato_Valido(anio, mes);
+        
+        if(*anio < 0){
+            printf("EL año debe ser positivo!\nIntente devuelta:  ");
+        }
+        else if(*anio > ANIO_MAXIMO_DIGITOS || *anio < ANIO_MINIMO_DIGITOS){
+            printf("El año debe ser de 4 digitos!\nIntente devuelta:  ");
+        }           
+        else if( (*anio == ANIO_MINIMO && *mes < MES_MINIMO_ANIO) || *anio < ANIO_MINIMO){
             printf("La fecha es inválida, aseguresé que la fecha debe ser de 4 dígitos, positivos y no menor del 1926/3 \nIntente devuelta: ");
-            Ingreso_Fecha_Formato_Valido(anio, mes);
         }
         else if(*mes <= 0 || *mes > 12){
             printf("Asegúrese que el mes debe estar en el rango del mes 1 al 12!\nIntente devuelta: ");
-            Ingreso_Fecha_Formato_Valido(anio, mes);
-        }
-        else if((*anio > 2026 && *mes < 3) || *anio > 2026){
+        } 
+        else if((*anio == ANIO_ACTUAL && *mes > MES_ACTUAL) || *anio > ANIO_ACTUAL){
             printf("La fecha a ingresar no puede superar la fecha actual: 2026/03...\nIntente devuelta:  ");
-            Ingreso_Fecha_Formato_Valido(anio, mes);
         }
         else{
             valido = true;
@@ -94,8 +107,10 @@ void Corregir_Respuesta(char respuesta_ingesada, int* puntaje_total_usuario, int
 
 int main() {
     const int MAX_INTENTOS = 3;
-    int intentos_del_usuario, puntaje_total_usuario = 0;
-    int puntaje_a_sumar, puntaje_a_restar = 0;
+    int intentos_del_usuario=0;
+    int puntaje_total_usuario = 0;
+    int puntaje_a_sumar = 0;
+    int puntaje_a_restar = 0;
     char respuesta_ingresada = '.';
     bool respuesta_validez = true;
     
@@ -118,7 +133,7 @@ int main() {
             Sumar_Puntos(puntaje_a_sumar, &puntaje_total_usuario);
         }
         else{
-            Restar_Puntos(puntaje_a_sumar, &puntaje_total_usuario);
+            Restar_Puntos(puntaje_a_restar, &puntaje_total_usuario);
         }
     }
 
@@ -132,6 +147,9 @@ int main() {
         if(!edad_valida){
             intentos_del_usuario = 3;
             printf("-RECHAZADO-\n");
+        }
+        else{
+            printf("mayor de edad :)");
         };
     }
         
