@@ -135,28 +135,33 @@ int Corregir_Respuesta(char respuesta_ingesada, int* puntaje_total_usuario, int 
     return puntaje_usuario;
 }
 
-void Corregir_Respuesta_int(int respuesta_ingresada_int, int *puntaje_total_usuario){
+int Corregir_Respuesta_int(int respuesta_ingresada_int){
     if(respuesta_ingresada_int == 0){
-        *puntaje_total_usuario -= 100;
+        return -100;
     }
     else if(respuesta_ingresada_int >= 1 && respuesta_ingresada_int <=3) {
-        *puntaje_total_usuario += 10;
+        return 10;
     }
     else if(respuesta_ingresada_int >= 4 && respuesta_ingresada_int <=6){
-        *puntaje_total_usuario += 40;
+        return 40;
     }
     else if(respuesta_ingresada_int >=7 && respuesta_ingresada_int <=9){
-        *puntaje_total_usuario += 70;
+        return 70;
     }
     else if(respuesta_ingresada_int >=10 && respuesta_ingresada_int <=12){
-        *puntaje_total_usuario += 120;
+        return 120;
     }
 }
 
 //final
-void Determinar_Tipo_Mago(puntaje_total_usuario){
-    if(puntaje_total_usuario )
-}
+void Determinar_Tipo_Mago(int puntos_pregunta1,int puntos_pregunta2, int puntos_pregunta3, int puntos_pregunta4){
+    int puntaje_final = puntos_pregunta1 + puntos_pregunta2 + puntos_pregunta3 + puntos_pregunta4;
+    if( puntaje_final < 0 ) printf("Según tus respuestas, tu estado es..... -RECHAZADO- ");
+    else if ( puntaje_final > 0 && puntaje_final <= 150 ) printf("Según tus respuestas, tu estado es..... -ASPIRANTE- ");
+    else if ( puntaje_final >= 151 && puntaje_final <= 250 ) printf("Según tus respuestas, tu estado es..... -MAGIO NOVATO- ");
+    else if ( puntaje_final >= 251 && puntaje_final <= 349 ) printf("Según tus respuestas, tu estado es..... -MAGIO- ");
+    else if ( puntaje_final >= 350 ) printf("Según tus respuestas, tu estado es..... -LIDER SUPREMO- ");
+}   
 
 int main() {
     const int MAX_INTENTOS = 3;
@@ -213,10 +218,10 @@ int main() {
         printf("\n¿Cuántas donas estaría dispuesto a sacrificar para el Número Uno?:\n");
         respuesta_ingresada_int=Validar_Respuesta_int(respuesta_ingresada_int);
         respuesta_ingresada_int=Validar_Respuesta_rango_int(respuesta_ingresada_int);
-        Corregir_Respuesta_int( respuesta_ingresada_int, &puntaje_total_usuario);
+        puntos_pregunta4 = Corregir_Respuesta_int(respuesta_ingresada_int);
     }
 
-    Determinar_Tipo_Mago(puntaje_total_usuario);
+    Determinar_Tipo_Mago(puntos_pregunta1, puntos_pregunta2, puntos_pregunta3, puntos_pregunta4);
     
 }
 
