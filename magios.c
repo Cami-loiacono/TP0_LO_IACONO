@@ -102,7 +102,8 @@ void sumar_puntos_respuesta_bool_pregunta_2(bool respuesta_validez_bool, int *pu
     if(respuesta_validez_bool){
         *puntos_pregunta2 = PUNTAJE_A_SUMAR_PREGUNTA_2;
     }
-    else *puntos_pregunta2 = PUNTAJE_A_RESTAR_PREGUNTA_2;
+    else *puntos_pregunta2 = -(PUNTAJE_A_RESTAR_PREGUNTA_2);
+    printf("PUNTAJE PREGUNTA 2: %i\n", *puntos_pregunta2);
 }
 //pregunta 3
 /*
@@ -231,9 +232,9 @@ void determinar_tipo_mago(int puntos_pregunta1,int puntos_pregunta2, int puntos_
     int puntaje_final_usuario = puntos_pregunta1 + puntos_pregunta2 + puntos_pregunta3 + puntos_pregunta4;
     if( puntaje_final_usuario < 0 ) printf("Según tus respuestas, tu estado es..... -RECHAZADO- ");
     else if ( puntaje_final_usuario >= 0 && puntaje_final_usuario <= 150 ) printf("Según tus respuestas, tu estado es..... -ASPIRANTE- \n");
-    else if ( puntaje_final_usuario >= 151 && puntaje_final_usuario <= 250 ) printf("Según tus respuestas, tu estado es..... -MAGIO NOVATO- \n");
-    else if ( puntaje_final_usuario >= 251 && puntaje_final_usuario <= 349 ) printf("Según tus respuestas, tu estado es..... -MAGIO-\n ");
-    else if ( puntaje_final_usuario >= 350 ) printf("Según tus respuestas, tu estado es..... -LIDER SUPREMO- \n ");
+    else if ( puntaje_final_usuario > 150 && puntaje_final_usuario <= 250 ) printf("Según tus respuestas, tu estado es..... -MAGIO NOVATO- \n");
+    else if ( puntaje_final_usuario > 250 && puntaje_final_usuario <= 349 ) printf("Según tus respuestas, tu estado es..... -MAGIO-\n ");
+    else if ( puntaje_final_usuario > 349 ) printf("Según tus respuestas, tu estado es..... -LIDER SUPREMO- \n ");
     printf("SU PUNTAJE FINAL HA SIDO: %i\n", puntaje_final_usuario); 
 }   
 
