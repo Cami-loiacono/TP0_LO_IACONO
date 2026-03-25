@@ -49,16 +49,17 @@ char validar_respuesta_char_4_opciones(char respuesta_ingresada, char opcion_1, 
     PRE: La respuesta que se ingresa debe ser un carácter válido (ser una de las opciones de respuesta) y debe entrar la opcion correcta.
     POS: Según la respuesta ingresada por el usuario, se van a restar o sumar puntos. En caso de que la repsuetsa es incorrecta, se le va a pedir al usuario que ingrese una nueva respuesta hasta que ingrese la correcta. En caso de que el usuario use los 3 intentos (el máximo) , se le asigna el puntaje -1 para finalizar el programa.
 */
-void corregir_respuesta_pregunta_1(char respuesta_ingesada, char opcion_correcta, int *intentos_del_usuario, int *puntos_pregunta1 ){
-   (*intentos_del_usuario)++;
-    while(respuesta_ingesada != opcion_correcta && *intentos_del_usuario < MAX_INTENTOS){
+void corregir_respuesta_pregunta_1(char respuesta_ingesada, char opcion_correcta, int *puntos_pregunta1 ){
+    int intentos_del_usuario=1;
+    while(respuesta_ingesada != opcion_correcta && intentos_del_usuario < MAX_INTENTOS){
         *puntos_pregunta1 -= PUNTAJE_A_RESTAR_PREGUNTA_1;
         printf("RESPUESTA INCORRECTA... Intente devuelta: ");
         scanf(" %c", &respuesta_ingesada);
         respuesta_ingesada = validar_respuesta_char_4_opciones(respuesta_ingesada, 'J', 'A', 'S', 'B');
-        (*intentos_del_usuario)++;
-
-        if( *intentos_del_usuario >= MAX_INTENTOS){
+        if(respuesta_ingesada != opcion_correcta){
+            intentos_del_usuario++;
+        }
+        if( intentos_del_usuario == MAX_INTENTOS ){
             printf("-RECHAZADO-\n");
             *puntos_pregunta1 = NUMERO_DE_FINALIZAR_PROGRAMA;
         }
@@ -240,7 +241,6 @@ void determinar_tipo_mago(int puntos_pregunta1,int puntos_pregunta2, int puntos_
 
 int main() {
     
-    int intentos_del_usuario=0;
     char respuesta_ingresada_char = '.';
     bool respuesta_validez_bool = true;
     int respuesta_ingresada_int = 0;
@@ -256,7 +256,7 @@ int main() {
     printf("¿Quién fundó realmente Springfield? \n [J]  Jebediah Springfield \n [A] Los aliens \n [S] Los Magios \n [B] Sr. Burns\n");
     scanf(" %c", &respuesta_ingresada_char);
     respuesta_ingresada_char = validar_respuesta_char_4_opciones(respuesta_ingresada_char, 'J', 'A', 'S', 'B');
-    corregir_respuesta_pregunta_1(respuesta_ingresada_char, 'J', &intentos_del_usuario, &puntos_pregunta1);
+    corregir_respuesta_pregunta_1(respuesta_ingresada_char, 'J', &puntos_pregunta1);
     
     if(puntos_pregunta1 != NUMERO_DE_FINALIZAR_PROGRAMA){
         //pregunta 2
