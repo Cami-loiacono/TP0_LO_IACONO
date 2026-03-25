@@ -109,13 +109,14 @@ void sumar_puntos_respuesta_bool_pregunta_2(bool respuesta_validez_bool, int *pu
     PRE: El año y el mes del usuario deben ser número enteros y respetar el orden de ingreso indicado (año/mes).
     POS: se valida infinitamente el formato de ingreso de la fecha, hasta que el usuario ingrese un formato correcto, es decir, dos números enteros separados por una barra sin espacios
 */
-void validar_formato_ingreso_fecha(int* anio, int* mes){
+void validar_ingreso_positivo_fecha(int* anio, int* mes){
     bool validez = false;
     while(!validez){
-        validez = ((scanf("%d/%d", anio, mes)) == 2);
-        if(validez == false){
-            printf("Debe ingresar dos números validos (año y mes), entre una barra sin espacios! \n");
+        scanf("%d/%d", anio, mes);
+        if(*anio < 0 || *mes < 0){
+            printf("Debe ingresar dos números enteros positivos!\n Intente devuelta: ");
         }
+        else validez = true;
     }
 }
 /*
@@ -125,7 +126,7 @@ void validar_formato_ingreso_fecha(int* anio, int* mes){
 void validar_rango_fecha_ingresada(int* anio, int* mes){
     bool valido = false;
     while(!valido){
-        validar_formato_ingreso_fecha(anio, mes);
+        validar_ingreso_positivo_fecha(anio, mes);
         
         if(*anio < 0){
             printf("EL año debe ser positivo!\nIntente devuelta:  ");
@@ -229,7 +230,7 @@ void corregir_respuesta_pregunta_4(int respuesta_ingresada_int, int *puntos_preg
 void determinar_tipo_mago(int puntos_pregunta1,int puntos_pregunta2, int puntos_pregunta3, int puntos_pregunta4){
     int puntaje_final_usuario = puntos_pregunta1 + puntos_pregunta2 + puntos_pregunta3 + puntos_pregunta4;
     if( puntaje_final_usuario < 0 ) printf("Según tus respuestas, tu estado es..... -RECHAZADO- ");
-    else if ( puntaje_final_usuario > 0 && puntaje_final_usuario <= 150 ) printf("Según tus respuestas, tu estado es..... -ASPIRANTE- \n");
+    else if ( puntaje_final_usuario >= 0 && puntaje_final_usuario <= 150 ) printf("Según tus respuestas, tu estado es..... -ASPIRANTE- \n");
     else if ( puntaje_final_usuario >= 151 && puntaje_final_usuario <= 250 ) printf("Según tus respuestas, tu estado es..... -MAGIO NOVATO- \n");
     else if ( puntaje_final_usuario >= 251 && puntaje_final_usuario <= 349 ) printf("Según tus respuestas, tu estado es..... -MAGIO-\n ");
     else if ( puntaje_final_usuario >= 350 ) printf("Según tus respuestas, tu estado es..... -LIDER SUPREMO- \n ");
