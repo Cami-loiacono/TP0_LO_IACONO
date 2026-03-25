@@ -1,32 +1,45 @@
 #include <stdio.h>
 #include <stdbool.h>
+/*CONSTANTES*/
 const int ANIO_ACTUAL = 2026;
 const int MES_ACTUAL = 3;
+const int NUMERO_DE_FINALIZAR_PROGRAMA = -1;
+//Pregunta 1
+const int PUNTAJE_A_SUMAR_PREGUNTA_1 = 100;
+const int PUNTAJE_A_RESTAR_PREGUNTA_1 = 20;
+//Pregunta 2
+const int PUNTAJE_A_SUMAR_PREGUNTA_2 = 50;
+const int PUNTAJE_A_RESTAR_PREGUNTA_2 = 300;
+//Pregunta 3
 const int ANIO_MINIMO_DIGITOS = 1000;
 const int ANIO_MAXIMO_DIGITOS = 9999;
 const int ANIO_MINIMO = 1926;
 const int MES_MINIMO_ANIO = 3;
 const int MAX_INTENTOS = 3;
+//Pregunta 4
+const int PUNTOS_MAXIMOS_DONAS = 120;
+const int PUNTOS_MINIMOS_DONAS = -100;
+const int PUNTOS_DONAS_1_3 = 10;
+const int PUNTOS_DONAS_4_6 = 40;
+const int PUNTOS_DONAS_7_9 = 70;    
+//--------------------------------------------------//
 
-//FUNCIONES ATÓMICAS (SIMPLES)
-void Identificar_Edad_Mayor_18(int edad_valida, int *puntos_pregunta3){
-    printf("%i", edad_valida);
+//FUNCIONES
+void identificar_edad_mayor_18(int edad_valida, int *puntos_pregunta3){
     if(!edad_valida){
-        *puntos_pregunta3 = -1;
+        *puntos_pregunta3 = NUMERO_DE_FINALIZAR_PROGRAMA;
         printf("-RECHAZADO-\n");
     }
     else *puntos_pregunta3= (edad_valida * 2);
 }
 
-void Sumar_Puntos_Respuesta_Secreto(bool respuesta_validez_bool, int puntaje_a_sumar, int puntaje_a_restar, int *puntos_pregunta2){
+void sumar_puntos_respuesta_bool_pregunta_2(bool respuesta_validez_bool, int puntaje_a_sumar, int puntaje_a_restar, int *puntos_pregunta2){
     if(respuesta_validez_bool){
         *puntos_pregunta2 = puntaje_a_sumar;
     }
     else *puntos_pregunta2 = puntaje_a_restar;
 }
-
-
-void Validar_formato_ingreso_fecha(int* anio, int* mes){
+void validar_formato_ingreso_fecha(int* anio, int* mes){
     bool validez = false;
     while(!validez){
         validez = ((scanf("%d/%d", anio, mes)) == 2);
@@ -35,10 +48,10 @@ void Validar_formato_ingreso_fecha(int* anio, int* mes){
         }
     }
 }
-void Validar_Rango_Fecha_Ingresada(int* anio, int* mes){
+void validar_rango_fecha_ingresada(int* anio, int* mes){
     bool valido = false;
     while(!valido){
-        Validar_formato_ingreso_fecha(anio, mes);
+        validar_formato_ingreso_fecha(anio, mes);
         
         if(*anio < 0){
             printf("EL año debe ser positivo!\nIntente devuelta:  ");
@@ -60,8 +73,7 @@ void Validar_Rango_Fecha_Ingresada(int* anio, int* mes){
         }
     }
 }
-
-char Validar_Respuesta_Char_4Opciones(char respuesta_ingresada, char opcion_1, char opcion_2, char opcion_3, char opcion_4){
+char validar_respuesta_char_4_opciones(char respuesta_ingresada, char opcion_1, char opcion_2, char opcion_3, char opcion_4){
     bool respuesta_validez = false;
     while(respuesta_validez == false){
         if(respuesta_ingresada == opcion_1 || respuesta_ingresada == opcion_2 || respuesta_ingresada == opcion_3 || respuesta_ingresada == opcion_4 ){
@@ -75,7 +87,7 @@ char Validar_Respuesta_Char_4Opciones(char respuesta_ingresada, char opcion_1, c
     return respuesta_ingresada;
    
 }
-char Validar_Respuesta_Char_2Opciones(char respuesta_ingresada, char opcion_1, char opcion_2){
+char validar_respuesta_char_2_opciones(char respuesta_ingresada, char opcion_1, char opcion_2){
     bool respuesta_validez = false;
     while(respuesta_validez == false){
         if(respuesta_ingresada == opcion_1 || respuesta_ingresada == opcion_2 ){
@@ -89,17 +101,17 @@ char Validar_Respuesta_Char_2Opciones(char respuesta_ingresada, char opcion_1, c
     return respuesta_ingresada;
    
 }
-bool Validar_Respuesta_Bool(char respuesta){
-    respuesta = Validar_Respuesta_Char_2Opciones(respuesta, 'S','N');
+bool validar_respuesta_bool(char respuesta){
+    respuesta = validar_respuesta_char_2_opciones(respuesta, 'S','N');
     return (respuesta == 'S');
 }
-void Calcular_Es_Mayor_18(int anio_usuario, int mes_usuario, int *edad){
+void calcular_es_mayor_18(int anio_usuario, int mes_usuario, int *edad){
     *edad = ANIO_ACTUAL - anio_usuario;
     if(MES_ACTUAL < mes_usuario){
         (*edad)--;
     };
 }
-int Validar_Respuesta_Int_Pregunta_4(int respuesta_ingresada_int){
+int validar_respuesta_int_pregunta_4(int respuesta_ingresada_int){
     bool valido = false;
     while(!valido){
         if((scanf("%i", &respuesta_ingresada_int)) != 1){
@@ -109,57 +121,57 @@ int Validar_Respuesta_Int_Pregunta_4(int respuesta_ingresada_int){
     }
     return respuesta_ingresada_int;
 }
-int Validar_Respuesta_Rango_Pregunta_4(int respuesta_ingresada_int){
+int validar_respuesta_rango_pregunta_4(int respuesta_ingresada_int){
     bool valido = false;
     while(!valido){
         if(respuesta_ingresada_int < 0 || respuesta_ingresada_int > 12){
             printf("El número debe estar en el rango de 0 a 12!");
-            respuesta_ingresada_int = Validar_Respuesta_Int_Pregunta_4(respuesta_ingresada_int);
+            respuesta_ingresada_int = validar_respuesta_int_pregunta_4(respuesta_ingresada_int);
         }
         else valido = true;
     }
+    return respuesta_ingresada_int;
 }
 
-void Corregir_Respuesta(char respuesta_ingesada, int puntaje_positivo_respuesta, int puntaje_negativo_respuesta, char opcion_correcta, int intentos_del_usuario, int *puntos_pregunta1 ){
+void corregir_respuesta_pregunta_1(char respuesta_ingesada, char opcion_correcta, int intentos_del_usuario, int *puntos_pregunta1 ){
    int puntaje_usuario= 0;
    intentos_del_usuario++;
     while(respuesta_ingesada != opcion_correcta && intentos_del_usuario < MAX_INTENTOS){
-        *puntos_pregunta1 -= puntaje_negativo_respuesta;
+        *puntos_pregunta1 -= PUNTAJE_A_RESTAR_PREGUNTA_1;
         printf("RESPUESTA INCORRECTA... Intente devuelta: ");
         scanf(" %c", &respuesta_ingesada);
-        respuesta_ingesada = Validar_Respuesta_Char_4Opciones(respuesta_ingesada, 'J', 'A', 'S', 'B');
+        respuesta_ingesada = validar_respuesta_char_4_opciones(respuesta_ingesada, 'J', 'A', 'S', 'B');
         (intentos_del_usuario)++;
 
         if( intentos_del_usuario >= MAX_INTENTOS){
             printf("-RECHAZADO-\n");
-            *puntos_pregunta1 = -1;
+            *puntos_pregunta1 = NUMERO_DE_FINALIZAR_PROGRAMA;
         }
     }
     if(respuesta_ingesada == opcion_correcta){
-        *puntos_pregunta1 += puntaje_positivo_respuesta;
+        *puntos_pregunta1 += PUNTAJE_A_SUMAR_PREGUNTA_1;
     }
 }
-void Corregir_Respuesta_Pregunta_4(int respuesta_ingresada_int, int *puntos_pregunta4){
-   printf("%i", respuesta_ingresada_int);
+void corregir_respuesta_pregunta_4(int respuesta_ingresada_int, int *puntos_pregunta4){
     if(respuesta_ingresada_int == 0){
-        *puntos_pregunta4 = -100;
+        *puntos_pregunta4 = PUNTOS_MINIMOS_DONAS;
     }
     else if(respuesta_ingresada_int >= 1 && respuesta_ingresada_int <=3) {
-        *puntos_pregunta4 = 10;
+        *puntos_pregunta4 = PUNTOS_DONAS_1_3;
     }
     else if(respuesta_ingresada_int >= 4 && respuesta_ingresada_int <=6){
-        *puntos_pregunta4 = 40;
+        *puntos_pregunta4 = PUNTOS_DONAS_4_6;
     }
     else if(respuesta_ingresada_int >=7 && respuesta_ingresada_int <=9){
-        *puntos_pregunta4 = 70;
+        *puntos_pregunta4 = PUNTOS_DONAS_7_9;
     }
     else if(respuesta_ingresada_int >=10 && respuesta_ingresada_int <=12){
-        *puntos_pregunta4 = 120;
+        *puntos_pregunta4 = PUNTOS_MAXIMOS_DONAS;
     }
 }
 
 //final
-void Determinar_Tipo_Mago(int puntos_pregunta1,int puntos_pregunta2, int puntos_pregunta3, int puntos_pregunta4){
+void determinar_tipo_mago(int puntos_pregunta1,int puntos_pregunta2, int puntos_pregunta3, int puntos_pregunta4){
 
     printf("%i\n", puntos_pregunta4); 
     int puntaje_final_usuario = puntos_pregunta1 + puntos_pregunta2 + puntos_pregunta3 + puntos_pregunta4;
@@ -182,51 +194,36 @@ int main() {
     int puntos_pregunta2 = 0;
     int puntos_pregunta3 = 0;
     int puntos_pregunta4 = 0;
+    int anio, mes = 0;
+    int edad = 0;
     
     //pregunta 1
     printf("¿Quién fundó realmente Springfield? \n [J]  Jebediah Springfield \n [A] Los aliens \n [S] Los Magios \n [B] Sr. Burns\n");
     scanf(" %c", &respuesta_ingresada_char);
-    puntaje_a_sumar = 100;
-    puntaje_a_restar = 20;
-
-    respuesta_ingresada_char = Validar_Respuesta_Char_4Opciones(respuesta_ingresada_char, 'J', 'A', 'S', 'B');
-    Corregir_Respuesta(respuesta_ingresada_char, puntaje_a_sumar, puntaje_a_restar, 'J', intentos_del_usuario, &puntos_pregunta1);
-    printf("\nPuntos obtenidos en la pregunta 1: %i\n", puntos_pregunta1);
-
-
-    if(puntos_pregunta1 != -1){
-
+    respuesta_ingresada_char = validar_respuesta_char_4_opciones(respuesta_ingresada_char, 'J', 'A', 'S', 'B');
+    corregir_respuesta_pregunta_1(respuesta_ingresada_char, 'J', intentos_del_usuario, &puntos_pregunta1);
+    
+    if(puntos_pregunta1 != NUMERO_DE_FINALIZAR_PROGRAMA){
         //pregunta 2
         printf("\n¿Promete mantener en secreto la existencia de los Magios?: \n[S] Sí \n[N] No\n");
         scanf(" %c", &respuesta_ingresada_char);
-        puntaje_a_sumar = 50;
-        puntaje_a_restar = 300;
-        respuesta_validez_bool = Validar_Respuesta_Bool(respuesta_ingresada_char);
-        Sumar_Puntos_Respuesta_Secreto(respuesta_validez_bool, puntaje_a_sumar, puntaje_a_restar, &puntos_pregunta2);
-        printf("\nPuntos obtenidos en la pregunta 2: %i\n", puntos_pregunta2);
-        
+        respuesta_validez_bool = validar_respuesta_bool(respuesta_ingresada_char);
+        sumar_puntos_respuesta_bool_pregunta_2(respuesta_validez_bool, PUNTAJE_A_SUMAR_PREGUNTA_2, PUNTAJE_A_RESTAR_PREGUNTA_2, &puntos_pregunta2);
+    
         //pregunta 3
-        int anio, mes = 0;
-        int edad_valida = true;
-
         printf("\n¿Cuál es su fecha de nacimiento? (formato: yyyy/mm): \n");
-        Validar_Rango_Fecha_Ingresada(&anio, &mes);
-        Calcular_Es_Mayor_18(anio, mes, &edad_valida);
-        Identificar_Edad_Mayor_18(edad_valida, &puntos_pregunta3);
-        printf("\nPuntos obtenidos en la pregunta 3: %i\n", puntos_pregunta3);
+        validar_rango_fecha_ingresada(&anio, &mes);
+        calcular_es_mayor_18(anio, mes, &edad);
+        identificar_edad_mayor_18(edad, &puntos_pregunta3);
         
-        if(puntos_pregunta3 != -1){
-            
+        if(puntos_pregunta3 != NUMERO_DE_FINALIZAR_PROGRAMA){
             //pregunta 4
-            
-                printf("\n¿Cuántas donas estaría dispuesto a sacrificar para el Número Uno?:\n");
-                respuesta_ingresada_int=Validar_Respuesta_Int_Pregunta_4(respuesta_ingresada_int);
-                respuesta_ingresada_int=Validar_Respuesta_Rango_Pregunta_4(respuesta_ingresada_int);
-                Corregir_Respuesta_Pregunta_4(respuesta_ingresada_int, &puntos_pregunta4);
-                printf("\nPuntos obtenidos en la pregunta 4: %i\n", puntos_pregunta4);
-            
-
-            Determinar_Tipo_Mago(puntos_pregunta1, puntos_pregunta2, puntos_pregunta3, puntos_pregunta4);
+            printf("\n¿Cuántas donas estaría dispuesto a sacrificar para el Número Uno?:\n");
+            respuesta_ingresada_int=validar_respuesta_int_pregunta_4(respuesta_ingresada_int);
+            respuesta_ingresada_int=validar_respuesta_rango_pregunta_4(respuesta_ingresada_int);
+            corregir_respuesta_pregunta_4(respuesta_ingresada_int, &puntos_pregunta4);
+            //FINAL
+            determinar_tipo_mago(puntos_pregunta1, puntos_pregunta2, puntos_pregunta3, puntos_pregunta4);
         }    
     }
 }
