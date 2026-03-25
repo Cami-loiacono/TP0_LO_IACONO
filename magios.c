@@ -227,8 +227,6 @@ void corregir_respuesta_pregunta_4(int respuesta_ingresada_int, int *puntos_preg
     POS: Se suman los puntos de cada pregunta para obtener el puntaje final del usuario, y se le asigna un estado de magio al usuario.
 */
 void determinar_tipo_mago(int puntos_pregunta1,int puntos_pregunta2, int puntos_pregunta3, int puntos_pregunta4){
-
-    
     int puntaje_final_usuario = puntos_pregunta1 + puntos_pregunta2 + puntos_pregunta3 + puntos_pregunta4;
     if( puntaje_final_usuario < 0 ) printf("Según tus respuestas, tu estado es..... -RECHAZADO- ");
     else if ( puntaje_final_usuario > 0 && puntaje_final_usuario <= 150 ) printf("Según tus respuestas, tu estado es..... -ASPIRANTE- \n");
