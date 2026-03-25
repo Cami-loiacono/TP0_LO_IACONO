@@ -24,21 +24,91 @@ const int PUNTOS_DONAS_4_6 = 40;
 const int PUNTOS_DONAS_7_9 = 70;    
 //--------------------------------------------------//
 
-//FUNCIONES
-void identificar_edad_mayor_18(int edad_valida, int *puntos_pregunta3){
-    if(!edad_valida){
-        *puntos_pregunta3 = NUMERO_DE_FINALIZAR_PROGRAMA;
-        printf("-RECHAZADO-\n");
-    }
-    else *puntos_pregunta3= (edad_valida * 2);
-}
+/*****FUNCIONES******/
 
-void sumar_puntos_respuesta_bool_pregunta_2(bool respuesta_validez_bool, int puntaje_a_sumar, int puntaje_a_restar, int *puntos_pregunta2){
-    if(respuesta_validez_bool){
-        *puntos_pregunta2 = puntaje_a_sumar;
+//pregunta 1
+/*
+    PRE: Las opciones deben ser caracteres válidos y distintos
+    POS: Devuelve el carácter válido ingresado por el usuario, es decir, que es igual a alguna de las opciones ingresadas por parámentro
+*/
+char validar_respuesta_char_4_opciones(char respuesta_ingresada, char opcion_1, char opcion_2, char opcion_3, char opcion_4){
+    bool respuesta_validez = false;
+    while(respuesta_validez == false){
+        if(respuesta_ingresada == opcion_1 || respuesta_ingresada == opcion_2 || respuesta_ingresada == opcion_3 || respuesta_ingresada == opcion_4 ){
+            respuesta_validez = true;   
+        }
+        else{
+            printf("Respuesta inválida... Intente devuelta: ");
+            scanf(" %c", &respuesta_ingresada);
+        }
     }
-    else *puntos_pregunta2 = puntaje_a_restar;
+    return respuesta_ingresada;
+   
 }
+/*
+    PRE: La respuesta que se ingresa debe ser un carácter válido (ser una de las opciones de respuesta) y debe entrar la opcion correcta.
+    POS: Según la respuesta ingresada por el usuario, se van a restar o sumar puntos. En caso de que la repsuetsa es incorrecta, se le va a pedir al usuario que ingrese una nueva respuesta hasta que ingrese la correcta. En caso de que el usuario use los 3 intentos (el máximo) , se le asigna el puntaje -1 para finalizar el programa.
+*/
+void corregir_respuesta_pregunta_1(char respuesta_ingesada, char opcion_correcta, int intentos_del_usuario, int *puntos_pregunta1 ){
+   intentos_del_usuario++;
+    while(respuesta_ingesada != opcion_correcta && intentos_del_usuario < MAX_INTENTOS){
+        *puntos_pregunta1 -= PUNTAJE_A_RESTAR_PREGUNTA_1;
+        printf("RESPUESTA INCORRECTA... Intente devuelta: ");
+        scanf(" %c", &respuesta_ingesada);
+        respuesta_ingesada = validar_respuesta_char_4_opciones(respuesta_ingesada, 'J', 'A', 'S', 'B');
+        (intentos_del_usuario)++;
+
+        if( intentos_del_usuario >= MAX_INTENTOS){
+            printf("-RECHAZADO-\n");
+            *puntos_pregunta1 = NUMERO_DE_FINALIZAR_PROGRAMA;
+        }
+    }
+    if(respuesta_ingesada == opcion_correcta){
+        *puntos_pregunta1 += PUNTAJE_A_SUMAR_PREGUNTA_1;
+    }
+}
+//pregunta 2
+/*
+    PRE: Las opciones deben ser caracteres válidos y distintos.
+    POS: Devuelve un carácter válido ingresado por el usuario. Si ingresa un carácter inválido, se le va a pedir que ingrese una nueva respuesta hasta que ingrese una válida, sin contar ningun intento como incorrecto.
+*/
+char validar_respuesta_char_2_opciones(char respuesta_ingresada, char opcion_1, char opcion_2){
+    bool respuesta_validez = false;
+    while(respuesta_validez == false){
+        if(respuesta_ingresada == opcion_1 || respuesta_ingresada == opcion_2 ){
+            respuesta_validez = true;   
+        }
+        else{
+            printf("Respuesta inválida... Intente devuelta: ");
+            scanf(" %c", &respuesta_ingresada);
+        }
+    }
+    return respuesta_ingresada;
+   
+}
+/*
+    PRE: La respuesta que se ingresa debe ser un carácter válido (ser una de las opciones de respuesta) y debe ser un booleano que indique sí o no, V o F.
+    POS: Devuelve un valor booleano según la respuesta ingresada. Si la repsuesta es "S", va a devolver un true, sino un false.
+*/
+bool identificar_respuesta_bool_pregunta_3(char respuesta){
+    respuesta = validar_respuesta_char_2_opciones(respuesta, 'S','N');
+    return (respuesta == 'S');
+}
+/*
+    PRE: La respuetsa ingresada debe ser válida (ser un carácter entre las opciones de resppuesta) y booleano que indique sí si o no.
+    POS: Según la respuesta booleana, se van a restar o sumar puntos.
+*/
+void sumar_puntos_respuesta_bool_pregunta_2(bool respuesta_validez_bool, int *puntos_pregunta2){
+    if(respuesta_validez_bool){
+        *puntos_pregunta2 = PUNTAJE_A_SUMAR_PREGUNTA_2;
+    }
+    else *puntos_pregunta2 = PUNTAJE_A_RESTAR_PREGUNTA_2;
+}
+//pregunta 3
+/*
+    PRE: El año y el mes del usuario deben ser número enteros y respetar el orden de ingreso indicado (año/mes).
+    POS: se valida infinitamente el formato de ingreso de la fecha, hasta que el usuario ingrese un formato correcto, es decir, dos números enteros separados por una barra sin espacios
+*/
 void validar_formato_ingreso_fecha(int* anio, int* mes){
     bool validez = false;
     while(!validez){
@@ -48,6 +118,10 @@ void validar_formato_ingreso_fecha(int* anio, int* mes){
         }
     }
 }
+/*
+    PRE: El año y el mes del usuario deben ser número enteros y respetar el orden de ingreso indicado (año/mes).
+    POS: se valida infinitamente el rango de la fecha ingresada, hasta que el usuario ingrese un rango válido. Se devuelve el año y el mes una vez termine el ciclo de validición.
+*/
 void validar_rango_fecha_ingresada(int* anio, int* mes){
     bool valido = false;
     while(!valido){
@@ -73,44 +147,33 @@ void validar_rango_fecha_ingresada(int* anio, int* mes){
         }
     }
 }
-char validar_respuesta_char_4_opciones(char respuesta_ingresada, char opcion_1, char opcion_2, char opcion_3, char opcion_4){
-    bool respuesta_validez = false;
-    while(respuesta_validez == false){
-        if(respuesta_ingresada == opcion_1 || respuesta_ingresada == opcion_2 || respuesta_ingresada == opcion_3 || respuesta_ingresada == opcion_4 ){
-            respuesta_validez = true;   
-        }
-        else{
-            printf("Respuesta inválida... Intente devuelta: ");
-            scanf(" %c", &respuesta_ingresada);
-        }
-    }
-    return respuesta_ingresada;
-   
-}
-char validar_respuesta_char_2_opciones(char respuesta_ingresada, char opcion_1, char opcion_2){
-    bool respuesta_validez = false;
-    while(respuesta_validez == false){
-        if(respuesta_ingresada == opcion_1 || respuesta_ingresada == opcion_2 ){
-            respuesta_validez = true;   
-        }
-        else{
-            printf("Respuesta inválida... Intente devuelta: ");
-            scanf(" %c", &respuesta_ingresada);
-        }
-    }
-    return respuesta_ingresada;
-   
-}
-bool validar_respuesta_bool(char respuesta){
-    respuesta = validar_respuesta_char_2_opciones(respuesta, 'S','N');
-    return (respuesta == 'S');
-}
-void calcular_es_mayor_18(int anio_usuario, int mes_usuario, int *edad){
+/*
+    PRE: El año y el mes del usuario deben ser número enteros y respetar el orden de ingreso indicado (año/mes). 
+    POS: Se calcula la edad del usuario y se devuelve. Ya sea mayor o menor a 18 años, se devuelve la edad calculada.
+*/
+void calcular_edad(int anio_usuario, int mes_usuario, int *edad){
     *edad = ANIO_ACTUAL - anio_usuario;
     if(MES_ACTUAL < mes_usuario){
         (*edad)--;
     };
 }
+/*
+    PRE: La edad del usuario debe ser un número entero
+    POS: Si la edad del usuario es menor a 18 años, se le asigna el puntaje -1 para finalizar el programa. Si la edad es mayor o igual a 18 años, se multiplica por dos y se asigna al puntaje de la pregunta 3.
+*/
+void corregir_edad_mayor_18_pregunta_3(int edad_valida, int *puntos_pregunta3){
+    if(edad_valida < 18){
+        *puntos_pregunta3 = NUMERO_DE_FINALIZAR_PROGRAMA;
+        printf("-RECHAZADO-\n");
+    }
+    else *puntos_pregunta3= (edad_valida * 2);
+}
+
+//pregunta 4
+/*
+    PRE: La respuesta ingresada debe ser un número entero.
+    POS: se valida infinitamente el ingreso del entero hasta que el usuario ingrese un número entero válido. Se devuelve el número entero ingresado por el usuario una vez termine el ciclo de validación.
+*/
 int validar_respuesta_int_pregunta_4(int respuesta_ingresada_int){
     bool valido = false;
     while(!valido){
@@ -121,6 +184,10 @@ int validar_respuesta_int_pregunta_4(int respuesta_ingresada_int){
     }
     return respuesta_ingresada_int;
 }
+/*
+    PRE: La respuesta ingresada debe ser un número entero válido.
+    POS: se valida infinitamente el rango ( 0-12 ) del número ingresado por el usuario, hasta que el usuario ingrese un número dentro del rango. Se devuelve el número entero ingresado por el usuario una vez termine el ciclo de validación. En el caso de no ingresar un número valido, se el pide que vuelva a ingresar un número, y se valida nuevamente para evitar errores.
+*/
 int validar_respuesta_rango_pregunta_4(int respuesta_ingresada_int){
     bool valido = false;
     while(!valido){
@@ -132,26 +199,10 @@ int validar_respuesta_rango_pregunta_4(int respuesta_ingresada_int){
     }
     return respuesta_ingresada_int;
 }
-
-void corregir_respuesta_pregunta_1(char respuesta_ingesada, char opcion_correcta, int intentos_del_usuario, int *puntos_pregunta1 ){
-   int puntaje_usuario= 0;
-   intentos_del_usuario++;
-    while(respuesta_ingesada != opcion_correcta && intentos_del_usuario < MAX_INTENTOS){
-        *puntos_pregunta1 -= PUNTAJE_A_RESTAR_PREGUNTA_1;
-        printf("RESPUESTA INCORRECTA... Intente devuelta: ");
-        scanf(" %c", &respuesta_ingesada);
-        respuesta_ingesada = validar_respuesta_char_4_opciones(respuesta_ingesada, 'J', 'A', 'S', 'B');
-        (intentos_del_usuario)++;
-
-        if( intentos_del_usuario >= MAX_INTENTOS){
-            printf("-RECHAZADO-\n");
-            *puntos_pregunta1 = NUMERO_DE_FINALIZAR_PROGRAMA;
-        }
-    }
-    if(respuesta_ingesada == opcion_correcta){
-        *puntos_pregunta1 += PUNTAJE_A_SUMAR_PREGUNTA_1;
-    }
-}
+/*
+    PRE: La respuesta ingresada debe ser un número entero válido dentro del rango de 0 a 12.
+    POS: Según el número de donas ingresado por el usuario, se asigna una cantidad de puntos determinada. 
+*/
 void corregir_respuesta_pregunta_4(int respuesta_ingresada_int, int *puntos_pregunta4){
     if(respuesta_ingresada_int == 0){
         *puntos_pregunta4 = PUNTOS_MINIMOS_DONAS;
@@ -171,22 +222,25 @@ void corregir_respuesta_pregunta_4(int respuesta_ingresada_int, int *puntos_preg
 }
 
 //final
+/*
+    PRE: -.
+    POS: Se suman los puntos de cada pregunta para obtener el puntaje final del usuario, y se le asigna un estado de magio al usuario.
+*/
 void determinar_tipo_mago(int puntos_pregunta1,int puntos_pregunta2, int puntos_pregunta3, int puntos_pregunta4){
 
-    printf("%i\n", puntos_pregunta4); 
+    
     int puntaje_final_usuario = puntos_pregunta1 + puntos_pregunta2 + puntos_pregunta3 + puntos_pregunta4;
     if( puntaje_final_usuario < 0 ) printf("Según tus respuestas, tu estado es..... -RECHAZADO- ");
     else if ( puntaje_final_usuario > 0 && puntaje_final_usuario <= 150 ) printf("Según tus respuestas, tu estado es..... -ASPIRANTE- \n");
     else if ( puntaje_final_usuario >= 151 && puntaje_final_usuario <= 250 ) printf("Según tus respuestas, tu estado es..... -MAGIO NOVATO- \n");
     else if ( puntaje_final_usuario >= 251 && puntaje_final_usuario <= 349 ) printf("Según tus respuestas, tu estado es..... -MAGIO-\n ");
     else if ( puntaje_final_usuario >= 350 ) printf("Según tus respuestas, tu estado es..... -LIDER SUPREMO- \n ");
+    printf("SU PUNTAJE FINAL HA SIDO: %i\n", puntaje_final_usuario); 
 }   
 
 int main() {
     
     int intentos_del_usuario=0;
-    int puntaje_a_sumar = 0;
-    int puntaje_a_restar = 0;
     char respuesta_ingresada_char = '.';
     bool respuesta_validez_bool = true;
     int respuesta_ingresada_int = 0;
@@ -207,14 +261,14 @@ int main() {
         //pregunta 2
         printf("\n¿Promete mantener en secreto la existencia de los Magios?: \n[S] Sí \n[N] No\n");
         scanf(" %c", &respuesta_ingresada_char);
-        respuesta_validez_bool = validar_respuesta_bool(respuesta_ingresada_char);
-        sumar_puntos_respuesta_bool_pregunta_2(respuesta_validez_bool, PUNTAJE_A_SUMAR_PREGUNTA_2, PUNTAJE_A_RESTAR_PREGUNTA_2, &puntos_pregunta2);
+        respuesta_validez_bool = identificar_respuesta_bool_pregunta_3(respuesta_ingresada_char);
+        sumar_puntos_respuesta_bool_pregunta_2(respuesta_validez_bool, &puntos_pregunta2);
     
         //pregunta 3
         printf("\n¿Cuál es su fecha de nacimiento? (formato: yyyy/mm): \n");
         validar_rango_fecha_ingresada(&anio, &mes);
-        calcular_es_mayor_18(anio, mes, &edad);
-        identificar_edad_mayor_18(edad, &puntos_pregunta3);
+        calcular_edad(anio, mes, &edad);
+        corregir_edad_mayor_18_pregunta_3(edad, &puntos_pregunta3);
         
         if(puntos_pregunta3 != NUMERO_DE_FINALIZAR_PROGRAMA){
             //pregunta 4
