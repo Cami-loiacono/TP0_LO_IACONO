@@ -51,6 +51,7 @@ char validar_respuesta_char_4_opciones(char respuesta_ingresada, char opcion_1, 
 */
 void corregir_respuesta_pregunta_1(char respuesta_ingesada, char opcion_correcta, int *puntos_pregunta1 ){
     int intentos_del_usuario=1;
+    
     while(respuesta_ingesada != opcion_correcta && intentos_del_usuario < MAX_INTENTOS){
         *puntos_pregunta1 -= PUNTAJE_A_RESTAR_PREGUNTA_1;
         printf("RESPUESTA INCORRECTA... Intente devuelta: ");
@@ -133,16 +134,16 @@ void validar_rango_fecha_ingresada(int* anio, int* mes){
         if(*anio < 0){
             printf("EL año debe ser positivo!\nIntente devuelta:  ");
         }
-        else if(*anio > ANIO_MAXIMO_DIGITOS || *anio < ANIO_MINIMO_DIGITOS){
+        else if((*anio > ANIO_MAXIMO_DIGITOS) || (*anio < ANIO_MINIMO_DIGITOS)){
             printf("El año debe ser de 4 digitos!\nIntente devuelta:  ");
         }           
-        else if( (*anio == ANIO_MINIMO && *mes < MES_MINIMO_ANIO) || *anio < ANIO_MINIMO){
+        else if( (*anio == ANIO_MINIMO) && (*mes < MES_MINIMO_ANIO) || (*anio < ANIO_MINIMO) ){
             printf("La fecha a ingresar no puede ser anterior a 1926/03...\nIntente devuelta:  ");
         }
-        else if(*mes <= 0 || *mes > 12){
+        else if((*mes <= 0)|| (*mes > 12)){
             printf("Asegúrese que el mes debe estar en el rango del mes 1 al 12!\nIntente devuelta: ");
         } 
-        else if((*anio == ANIO_ACTUAL && *mes > MES_ACTUAL) || *anio > ANIO_ACTUAL){
+        else if(((*anio == ANIO_ACTUAL) && (*mes > MES_ACTUAL)) || (*anio > ANIO_ACTUAL)){
             printf("La fecha a ingresar no puede superar la fecha actual: 2026/03...\nIntente devuelta:  ");
         }
         else{
@@ -210,16 +211,16 @@ void corregir_respuesta_pregunta_4(int respuesta_ingresada_int, int *puntos_preg
     if(respuesta_ingresada_int == 0){
         *puntos_pregunta4 = PUNTOS_MINIMOS_DONAS;
     }
-    else if(respuesta_ingresada_int >= 1 && respuesta_ingresada_int <=3) {
+    else if((respuesta_ingresada_int >= 1) && (respuesta_ingresada_int <=3)) {
         *puntos_pregunta4 = PUNTOS_DONAS_1_3;
     }
-    else if(respuesta_ingresada_int >= 4 && respuesta_ingresada_int <=6){
+    else if((respuesta_ingresada_int >= 4) && (respuesta_ingresada_int <=6)){
         *puntos_pregunta4 = PUNTOS_DONAS_4_6;
     }
-    else if(respuesta_ingresada_int >=7 && respuesta_ingresada_int <=9){
+    else if((respuesta_ingresada_int >=7) && (respuesta_ingresada_int <=9)){
         *puntos_pregunta4 = PUNTOS_DONAS_7_9;
     }
-    else if(respuesta_ingresada_int >=10 && respuesta_ingresada_int <=12){
+    else if((respuesta_ingresada_int >=10) && (respuesta_ingresada_int <=12)){
         *puntos_pregunta4 = PUNTOS_MAXIMOS_DONAS;
     }
 }
@@ -232,10 +233,18 @@ void corregir_respuesta_pregunta_4(int respuesta_ingresada_int, int *puntos_preg
 void determinar_tipo_mago(int puntos_pregunta1,int puntos_pregunta2, int puntos_pregunta3, int puntos_pregunta4){
     int puntaje_final_usuario = puntos_pregunta1 + puntos_pregunta2 + puntos_pregunta3 + puntos_pregunta4;
     if( puntaje_final_usuario < 0 ) printf("Según tus respuestas, tu estado es..... -RECHAZADO- ");
-    else if ( puntaje_final_usuario >= 0 && puntaje_final_usuario <= 150 ) printf("Según tus respuestas, tu estado es..... -ASPIRANTE- \n");
-    else if ( puntaje_final_usuario > 150 && puntaje_final_usuario <= 250 ) printf("Según tus respuestas, tu estado es..... -MAGIO NOVATO- \n");
-    else if ( puntaje_final_usuario > 250 && puntaje_final_usuario <= 349 ) printf("Según tus respuestas, tu estado es..... -MAGIO-\n ");
-    else if ( puntaje_final_usuario > 349 ) printf("Según tus respuestas, tu estado es..... -LIDER SUPREMO- \n ");
+    else if( (puntaje_final_usuario >= 0) && (puntaje_final_usuario <= 150) ){
+        printf("Según tus respuestas, tu estado es..... -ASPIRANTE- \n");
+    }
+    else if ( (puntaje_final_usuario > 150) && (puntaje_final_usuario <= 250) ){
+        printf("Según tus respuestas, tu estado es..... -MAGIO NOVATO- \n");
+    }
+    else if ( (puntaje_final_usuario > 250) && (puntaje_final_usuario <= 349) ){
+        printf("Según tus respuestas, tu estado es..... -MAGIO-\n ");
+    }
+    else if ( puntaje_final_usuario > 349 ){
+        printf("Según tus respuestas, tu estado es..... -LIDER SUPREMO- \n ")
+    }
     printf("SU PUNTAJE FINAL HA SIDO: %i\n", puntaje_final_usuario); 
 }   
 
