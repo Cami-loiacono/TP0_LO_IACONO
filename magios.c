@@ -7,9 +7,15 @@ const int NUMERO_DE_FINALIZAR_PROGRAMA = -1;
 //Pregunta 1
 const int PUNTAJE_A_SUMAR_PREGUNTA_1 = 100;
 const int PUNTAJE_A_RESTAR_PREGUNTA_1 = 20;
+const char JEBEDIAH = 'J';
+const char BURNS = 'B';
+const char MAGIOS = 'S';
+const char ALIENS = 'A';
 //Pregunta 2
 const int PUNTAJE_A_SUMAR_PREGUNTA_2 = 50;
 const int PUNTAJE_A_RESTAR_PREGUNTA_2 = 300;
+const char SI = 'S';
+const char NO = 'N';
 //Pregunta 3
 const int ANIO_MINIMO_DIGITOS = 1000;
 const int ANIO_MAXIMO_DIGITOS = 9999;
@@ -31,7 +37,7 @@ const int PUNTOS_DONAS_7_9 = 70;
     PRE: Las opciones deben ser caracteres válidos y distintos
     POS: Devuelve el carácter válido ingresado por el usuario, es decir, que es igual a alguna de las opciones ingresadas por parámentro
 */
-char validar_respuesta_char_4_opciones(char respuesta_ingresada, char opcion_1, char opcion_2, char opcion_3, char opcion_4){
+char validar_respuesta_char_4_opciones(char respuesta_ingresada){
     bool respuesta_validez = false;
     while(respuesta_validez == false){
         if(respuesta_ingresada == opcion_1 || respuesta_ingresada == opcion_2 || respuesta_ingresada == opcion_3 || respuesta_ingresada == opcion_4 ){
@@ -56,7 +62,7 @@ void corregir_respuesta_pregunta_1(char respuesta_ingesada, char opcion_correcta
         *puntos_pregunta1 -= PUNTAJE_A_RESTAR_PREGUNTA_1;
         printf("RESPUESTA INCORRECTA... Intente devuelta: ");
         scanf(" %c", &respuesta_ingesada);
-        respuesta_ingesada = validar_respuesta_char_4_opciones(respuesta_ingesada, 'J', 'A', 'S', 'B');
+        respuesta_ingesada = validar_respuesta_char_4_opciones(respuesta_ingesada, JEBEDIAH, ALIENS, MAGIOS, BURNS);
         if(respuesta_ingesada != opcion_correcta){
             intentos_del_usuario++;
         }
@@ -93,8 +99,8 @@ char validar_respuesta_char_2_opciones(char respuesta_ingresada, char opcion_1, 
     POS: Devuelve un valor booleano según la respuesta ingresada. Si la repsuesta es "S", va a devolver un true, sino un false.
 */
 bool identificar_respuesta_bool_pregunta_3(char respuesta){
-    respuesta = validar_respuesta_char_2_opciones(respuesta, 'S','N');
-    return (respuesta == 'S');
+    respuesta = validar_respuesta_char_2_opciones(respuesta, SI,NO);
+    return (respuesta == SI);
 }
 /*
     PRE: La respuetsa ingresada debe ser válida (ser un carácter entre las opciones de resppuesta) y booleano que indique sí si o no.
@@ -264,7 +270,7 @@ int main() {
     //pregunta 1
     printf("¿Quién fundó realmente Springfield? \n [J]  Jebediah Springfield \n [A] Los aliens \n [S] Los Magios \n [B] Sr. Burns\n");
     scanf(" %c", &respuesta_ingresada_char);
-    respuesta_ingresada_char = validar_respuesta_char_4_opciones(respuesta_ingresada_char, 'J', 'A', 'S', 'B');
+    respuesta_ingresada_char = validar_respuesta_char_4_opciones(respuesta_ingresada_char);
     corregir_respuesta_pregunta_1(respuesta_ingresada_char, 'J', &puntos_pregunta1);
     
     if(puntos_pregunta1 != NUMERO_DE_FINALIZAR_PROGRAMA){
