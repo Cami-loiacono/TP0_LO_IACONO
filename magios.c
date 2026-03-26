@@ -259,7 +259,7 @@ void determinar_tipo_mago(int puntos_pregunta1,int puntos_pregunta2, int puntos_
         printf("Según tus respuestas, tu estado es..... -MAGIO-\n ");
     }
     else if ( puntaje_final_usuario > 349 ){
-        printf("Según tus respuestas, tu estado es..... -LIDER SUPREMO- \n ")
+        printf("Según tus respuestas, tu estado es..... -LIDER SUPREMO- \n ");
     }
     printf("SU PUNTAJE FINAL HA SIDO: %i\n", puntaje_final_usuario); 
 }   
