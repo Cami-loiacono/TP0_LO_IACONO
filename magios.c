@@ -31,8 +31,21 @@ const int PUNTOS_DONAS_7_9 = 70;
 //--------------------------------------------------//
 
 /*****FUNCIONES******/
-
 //pregunta 1
+
+void preguntar_pregunta_1(char *respuesta_ingresada_char){
+    printf("¿Quién fundó realmente Springfield? \n [J]  Jebediah Springfield \n [A] Los aliens \n [S] Los Magios \n [B] Sr. Burns\n");
+    scanf(" %c", respuesta_ingresada_char);
+}
+void preguntar_devuelta_incorrecta_1(char *respuesta_ingesada){
+    printf("RESPUESTA INCORRECTA... Intente devuelta: ");
+    scanf(" %c", respuesta_ingesada);
+}
+void preguntar_devuelta_invalido(char *respuesta_ingresada){
+    printf("Respuesta inválida... Intente devuelta: ");
+    scanf(" %c", respuesta_ingresada);
+}
+
 /*
     PRE: Las opciones deben ser caracteres válidos y distintos
     POS: Devuelve el carácter válido ingresado por el usuario, es decir, que es igual a alguna de las opciones ingresadas por parámentro
@@ -44,8 +57,7 @@ char validar_respuesta_char_4_opciones(char respuesta_ingresada){
             respuesta_validez = true;   
         }
         else{
-            printf("Respuesta inválida... Intente devuelta: ");
-            scanf(" %c", &respuesta_ingresada);
+            preguntar_devuelta_invalido(char *respuesta_ingresada);
         }
     }
     return respuesta_ingresada;
@@ -60,8 +72,7 @@ void corregir_respuesta_pregunta_1(char respuesta_ingesada, int *puntos_pregunta
     
     while(respuesta_ingesada != opcion_correcta && intentos_del_usuario < MAX_INTENTOS){
         *puntos_pregunta1 -= PUNTAJE_A_RESTAR_PREGUNTA_1;
-        printf("RESPUESTA INCORRECTA... Intente devuelta: ");
-        scanf(" %c", &respuesta_ingesada);
+        preguntar_devuelta_incorrecta_1(char &respuesta_ingesada);
         respuesta_ingesada = validar_respuesta_char_4_opciones(respuesta_ingesada);
         if(respuesta_ingesada != JEBEDIAH){
             intentos_del_usuario++;
@@ -76,6 +87,10 @@ void corregir_respuesta_pregunta_1(char respuesta_ingesada, int *puntos_pregunta
     }
 }
 //pregunta 2
+void preguntar_pregunta_2(char *respuesta_ingresada_char){
+    printf("\n¿Promete mantener en secreto la existencia de los Magios?: \n[S] Sí \n[N] No\n");
+    scanf(" %c", respuesta_ingresada_char);
+}
 /*
     PRE: Las opciones deben ser caracteres válidos y distintos.
     POS: Devuelve un carácter válido ingresado por el usuario. Si ingresa un carácter inválido, se le va a pedir que ingrese una nueva respuesta hasta que ingrese una válida, sin contar ningun intento como incorrecto.
@@ -87,8 +102,7 @@ char validar_respuesta_char_2_opciones(char respuesta_ingresada){
             respuesta_validez = true;   
         }
         else{
-            printf("Respuesta inválida... Intente devuelta: ");
-            scanf(" %c", &respuesta_ingresada);
+            preguntar_devuelta_invalido(&respuesta_ingresada);
         }
     }
     return respuesta_ingresada;
@@ -269,15 +283,13 @@ int main() {
     int edad = 0;
     
     //pregunta 1
-    printf("¿Quién fundó realmente Springfield? \n [J]  Jebediah Springfield \n [A] Los aliens \n [S] Los Magios \n [B] Sr. Burns\n");
-    scanf(" %c", &respuesta_ingresada_char);
+    preguntar_pregunta_1(&respuesta_ingresada_char)
     respuesta_ingresada_char = validar_respuesta_char_4_opciones(respuesta_ingresada_char);
     corregir_respuesta_pregunta_1(respuesta_ingresada_char, JEBEDIAH, &puntos_pregunta1);
     
     if(puntos_pregunta1 != NUMERO_DE_FINALIZAR_PROGRAMA){
         //pregunta 2
-        printf("\n¿Promete mantener en secreto la existencia de los Magios?: \n[S] Sí \n[N] No\n");
-        scanf(" %c", &respuesta_ingresada_char);
+        
         respuesta_validez_bool = identificar_respuesta_bool_pregunta_3(respuesta_ingresada_char);
         sumar_puntos_respuesta_bool_pregunta_2(respuesta_validez_bool, &puntos_pregunta2);
     
