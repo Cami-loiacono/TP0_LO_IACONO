@@ -57,7 +57,7 @@ char validar_respuesta_char_4_opciones(char respuesta_ingresada){
             respuesta_validez = true;   
         }
         else{
-            preguntar_devuelta_invalido(char *respuesta_ingresada);
+            preguntar_devuelta_invalido(&respuesta_ingresada);
         }
     }
     return respuesta_ingresada;
