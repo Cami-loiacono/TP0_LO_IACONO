@@ -200,6 +200,10 @@ void preguntar_pregunta_donas(int *respuesta_ingresada_int){
     printf("\n¿Cuántas donas estaría dispuesto a sacrificar para el Número Uno?:\n");
     scanf("%i", respuesta_ingresada_int);
 }
+void preguntar_respuesta_invalida(int *respuesta_ingresada_int){
+    printf("El número debe estar en el rango de 0 a 12!");
+    scanf("%i", respuesta_ingresada_int);
+}
 
 /*
     PRE: La respuesta ingresada debe ser un número entero válido.
@@ -209,8 +213,7 @@ int validar_respuesta_rango_pregunta_donas(int respuesta_ingresada_int){
     bool valido = false;
     while(!valido){
         if(respuesta_ingresada_int < 0 || respuesta_ingresada_int > 12){
-            printf("El número debe estar en el rango de 0 a 12!");
-            respuesta_ingresada_int = validar_respuesta_int_pregunta_donas(respuesta_ingresada_int);
+            preguntar_respuesta_invalida(&respuesta_ingresada_int);
         }
         else valido = true;
     }
