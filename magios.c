@@ -70,7 +70,7 @@ char validar_respuesta_char_4_opciones(char respuesta_ingresada){
 void corregir_respuesta_pregunta_fundador(char respuesta_ingesada, int *puntos_pregunta1){
     int intentos_del_usuario=1;
     
-    while(respuesta_ingesada != opcion_correcta && intentos_del_usuario < MAX_INTENTOS){
+    while(respuesta_ingesada != JEBEDIAH && intentos_del_usuario < MAX_INTENTOS){
         *puntos_pregunta1 -= PUNTAJE_A_RESTAR_PREGUNTA_1;
         preguntar_devuelta_incorrecta_1(char &respuesta_ingesada);
         respuesta_ingesada = validar_respuesta_char_4_opciones(respuesta_ingesada);
@@ -278,7 +278,7 @@ int main() {
     int edad = 0;
     
     //pregunta 1
-    preguntar_pregunta_fundador(&respuesta_ingresada_char)
+    preguntar_pregunta_fundador(&respuesta_ingresada_char);
     respuesta_ingresada_char = validar_respuesta_char_4_opciones(respuesta_ingresada_char);
     corregir_respuesta_pregunta_fundador(respuesta_ingresada_char, &puntos_pregunta1);
     
@@ -296,8 +296,7 @@ int main() {
         
         if(puntos_pregunta3 != NUMERO_DE_FINALIZAR_PROGRAMA){
             //pregunta 4
-            preguntar_pregunta_donas(&respuesta_ingresada_int);
-            respuesta_ingresada_int=validar_respuesta_int_pregunta_donas(respuesta_ingresada_int);
+            preguntar_pregunta_donas(&respuesta_ingresada_int); 
             respuesta_ingresada_int=validar_respuesta_rango_pregunta_donas(respuesta_ingresada_int);
             corregir_respuesta_pregunta_donas(respuesta_ingresada_int, &puntos_pregunta4);
             //FINAL
