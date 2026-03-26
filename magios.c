@@ -67,7 +67,7 @@ char validar_respuesta_char_4_opciones(char respuesta_ingresada){
     PRE: La respuesta que se ingresa debe ser un carácter válido (ser una de las opciones de respuesta) y debe entrar la opcion correcta.
     POS: Según la respuesta ingresada por el usuario, se van a restar o sumar puntos. En caso de que la repsuetsa es incorrecta, se le va a pedir al usuario que ingrese una nueva respuesta hasta que ingrese la correcta. En caso de que el usuario use los 3 intentos (el máximo) , se le asigna el puntaje -1 para finalizar el programa.
 */
-void corregir_respuesta_pregunta_fundador(char respuesta_ingesada, int *puntos_pregunta1 ){
+void corregir_respuesta_pregunta_fundador(char respuesta_ingesada, int *puntos_pregunta1){
     int intentos_del_usuario=1;
     
     while(respuesta_ingesada != opcion_correcta && intentos_del_usuario < MAX_INTENTOS){
@@ -277,7 +277,7 @@ int main() {
     //pregunta 1
     preguntar_pregunta_fundador(&respuesta_ingresada_char)
     respuesta_ingresada_char = validar_respuesta_char_4_opciones(respuesta_ingresada_char);
-    corregir_respuesta_pregunta_fundador(respuesta_ingresada_char, JEBEDIAH, &puntos_pregunta1);
+    corregir_respuesta_pregunta_fundador(respuesta_ingresada_char, &puntos_pregunta1);
     
     if(puntos_pregunta1 != NUMERO_DE_FINALIZAR_PROGRAMA){
         //pregunta 2
