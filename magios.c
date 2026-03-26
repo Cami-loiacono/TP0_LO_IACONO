@@ -40,7 +40,7 @@ const int PUNTOS_DONAS_7_9 = 70;
 char validar_respuesta_char_4_opciones(char respuesta_ingresada){
     bool respuesta_validez = false;
     while(respuesta_validez == false){
-        if(respuesta_ingresada == opcion_1 || respuesta_ingresada == opcion_2 || respuesta_ingresada == opcion_3 || respuesta_ingresada == opcion_4 ){
+        if(respuesta_ingresada == JEBEDIAH || respuesta_ingresada == ALIENS || respuesta_ingresada == MAGIOS || respuesta_ingresada == BURNS ){
             respuesta_validez = true;   
         }
         else{
@@ -55,15 +55,15 @@ char validar_respuesta_char_4_opciones(char respuesta_ingresada){
     PRE: La respuesta que se ingresa debe ser un carácter válido (ser una de las opciones de respuesta) y debe entrar la opcion correcta.
     POS: Según la respuesta ingresada por el usuario, se van a restar o sumar puntos. En caso de que la repsuetsa es incorrecta, se le va a pedir al usuario que ingrese una nueva respuesta hasta que ingrese la correcta. En caso de que el usuario use los 3 intentos (el máximo) , se le asigna el puntaje -1 para finalizar el programa.
 */
-void corregir_respuesta_pregunta_1(char respuesta_ingesada, char opcion_correcta, int *puntos_pregunta1 ){
+void corregir_respuesta_pregunta_1(char respuesta_ingesada, int *puntos_pregunta1 ){
     int intentos_del_usuario=1;
     
     while(respuesta_ingesada != opcion_correcta && intentos_del_usuario < MAX_INTENTOS){
         *puntos_pregunta1 -= PUNTAJE_A_RESTAR_PREGUNTA_1;
         printf("RESPUESTA INCORRECTA... Intente devuelta: ");
         scanf(" %c", &respuesta_ingesada);
-        respuesta_ingesada = validar_respuesta_char_4_opciones(respuesta_ingesada, JEBEDIAH, ALIENS, MAGIOS, BURNS);
-        if(respuesta_ingesada != opcion_correcta){
+        respuesta_ingesada = validar_respuesta_char_4_opciones(respuesta_ingesada);
+        if(respuesta_ingesada != JEBEDIAH){
             intentos_del_usuario++;
         }
         if( intentos_del_usuario == MAX_INTENTOS ){
@@ -71,7 +71,7 @@ void corregir_respuesta_pregunta_1(char respuesta_ingesada, char opcion_correcta
             *puntos_pregunta1 = NUMERO_DE_FINALIZAR_PROGRAMA;
         }
     }
-    if(respuesta_ingesada == opcion_correcta){
+    if(respuesta_ingesada == JEBEDIAH){
         *puntos_pregunta1 += PUNTAJE_A_SUMAR_PREGUNTA_1;
     }
 }
@@ -80,10 +80,10 @@ void corregir_respuesta_pregunta_1(char respuesta_ingesada, char opcion_correcta
     PRE: Las opciones deben ser caracteres válidos y distintos.
     POS: Devuelve un carácter válido ingresado por el usuario. Si ingresa un carácter inválido, se le va a pedir que ingrese una nueva respuesta hasta que ingrese una válida, sin contar ningun intento como incorrecto.
 */
-char validar_respuesta_char_2_opciones(char respuesta_ingresada, char opcion_1, char opcion_2){
+char validar_respuesta_char_2_opciones(char respuesta_ingresada){
     bool respuesta_validez = false;
     while(respuesta_validez == false){
-        if(respuesta_ingresada == opcion_1 || respuesta_ingresada == opcion_2 ){
+        if((respuesta_ingresada == SI)|| (respuesta_ingresada == NO )){
             respuesta_validez = true;   
         }
         else{
@@ -99,7 +99,7 @@ char validar_respuesta_char_2_opciones(char respuesta_ingresada, char opcion_1, 
     POS: Devuelve un valor booleano según la respuesta ingresada. Si la repsuesta es "S", va a devolver un true, sino un false.
 */
 bool identificar_respuesta_bool_pregunta_3(char respuesta){
-    respuesta = validar_respuesta_char_2_opciones(respuesta, SI,NO);
+    respuesta = validar_respuesta_char_2_opciones(respuesta);
     return (respuesta == SI);
 }
 /*
@@ -187,7 +187,8 @@ void corregir_edad_mayor_18_pregunta_3(int edad_valida, int *puntos_pregunta3){
 int validar_respuesta_int_pregunta_4(int respuesta_ingresada_int){
     bool valido = false;
     while(!valido){
-        if((scanf("%i", &respuesta_ingresada_int)) != 1){
+        
+        if((scanf("%i", &respuesta_ingresada_int)!= 1){
             printf("Debes ingresar un número entero... intente devuelta:\n");
         }
         else valido = true;
@@ -271,7 +272,7 @@ int main() {
     printf("¿Quién fundó realmente Springfield? \n [J]  Jebediah Springfield \n [A] Los aliens \n [S] Los Magios \n [B] Sr. Burns\n");
     scanf(" %c", &respuesta_ingresada_char);
     respuesta_ingresada_char = validar_respuesta_char_4_opciones(respuesta_ingresada_char);
-    corregir_respuesta_pregunta_1(respuesta_ingresada_char, 'J', &puntos_pregunta1);
+    corregir_respuesta_pregunta_1(respuesta_ingresada_char, JEBEDIAH, &puntos_pregunta1);
     
     if(puntos_pregunta1 != NUMERO_DE_FINALIZAR_PROGRAMA){
         //pregunta 2
