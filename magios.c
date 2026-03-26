@@ -72,7 +72,7 @@ void corregir_respuesta_pregunta_fundador(char respuesta_ingesada, int *puntos_p
     
     while(respuesta_ingesada != JEBEDIAH && intentos_del_usuario < MAX_INTENTOS){
         *puntos_pregunta1 -= PUNTAJE_A_RESTAR_PREGUNTA_1;
-        preguntar_devuelta_incorrecta_1(char &respuesta_ingesada);
+        preguntar_devuelta_incorrecta_1(&respuesta_ingesada);
         respuesta_ingesada = validar_respuesta_char_4_opciones(respuesta_ingesada);
         if(respuesta_ingesada != JEBEDIAH){
             intentos_del_usuario++;
