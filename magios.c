@@ -33,7 +33,7 @@ const int PUNTOS_DONAS_7_9 = 70;
 /*****FUNCIONES******/
 //pregunta 1
 
-void preguntar_pregunta_1(char *respuesta_ingresada_char){
+void preguntar_pregunta_fundador(char *respuesta_ingresada_char){
     printf("¿Quién fundó realmente Springfield? \n [J]  Jebediah Springfield \n [A] Los aliens \n [S] Los Magios \n [B] Sr. Burns\n");
     scanf(" %c", respuesta_ingresada_char);
 }
@@ -67,7 +67,7 @@ char validar_respuesta_char_4_opciones(char respuesta_ingresada){
     PRE: La respuesta que se ingresa debe ser un carácter válido (ser una de las opciones de respuesta) y debe entrar la opcion correcta.
     POS: Según la respuesta ingresada por el usuario, se van a restar o sumar puntos. En caso de que la repsuetsa es incorrecta, se le va a pedir al usuario que ingrese una nueva respuesta hasta que ingrese la correcta. En caso de que el usuario use los 3 intentos (el máximo) , se le asigna el puntaje -1 para finalizar el programa.
 */
-void corregir_respuesta_pregunta_1(char respuesta_ingesada, int *puntos_pregunta1 ){
+void corregir_respuesta_pregunta_fundador(char respuesta_ingesada, int *puntos_pregunta1 ){
     int intentos_del_usuario=1;
     
     while(respuesta_ingesada != opcion_correcta && intentos_del_usuario < MAX_INTENTOS){
@@ -87,7 +87,7 @@ void corregir_respuesta_pregunta_1(char respuesta_ingesada, int *puntos_pregunta
     }
 }
 //pregunta 2
-void preguntar_pregunta_2(char *respuesta_ingresada_char){
+void preguntar_pregunta_secreto(char *respuesta_ingresada_char){
     printf("\n¿Promete mantener en secreto la existencia de los Magios?: \n[S] Sí \n[N] No\n");
     scanf(" %c", respuesta_ingresada_char);
 }
@@ -112,7 +112,7 @@ char validar_respuesta_char_2_opciones(char respuesta_ingresada){
     PRE: La respuesta que se ingresa debe ser un carácter válido (ser una de las opciones de respuesta) y debe ser un booleano que indique sí o no, V o F.
     POS: Devuelve un valor booleano según la respuesta ingresada. Si la repsuesta es "S", va a devolver un true, sino un false.
 */
-bool identificar_respuesta_bool_pregunta_3(char respuesta){
+bool identificar_respuesta_bool_pregunta_secreto(char respuesta){
     respuesta = validar_respuesta_char_2_opciones(respuesta);
     return (respuesta == SI);
 }
@@ -120,7 +120,7 @@ bool identificar_respuesta_bool_pregunta_3(char respuesta){
     PRE: La respuetsa ingresada debe ser válida (ser un carácter entre las opciones de resppuesta) y booleano que indique sí si o no.
     POS: Según la respuesta booleana, se van a restar o sumar puntos.
 */
-void sumar_puntos_respuesta_bool_pregunta_2(bool respuesta_validez_bool, int *puntos_pregunta2){
+void sumar_puntos_respuesta_bool_pregunta_secreto(bool respuesta_validez_bool, int *puntos_pregunta2){
     if(respuesta_validez_bool){
         *puntos_pregunta2 = PUNTAJE_A_SUMAR_PREGUNTA_2;
     }
@@ -139,7 +139,9 @@ void validar_ingreso_positivo_fecha(int* anio, int* mes){
         if(*anio < 0 || *mes < 0){
             printf("Debe ingresar dos números enteros positivos!\n Intente devuelta: ");
         }
-        else validez = true;
+        else {
+            validez = true;
+        }
     }
 }
 /*
@@ -185,7 +187,7 @@ void calcular_edad(int anio_usuario, int mes_usuario, int *edad){
     PRE: La edad del usuario debe ser un número entero
     POS: Si la edad del usuario es menor a 18 años, se le asigna el puntaje -1 para finalizar el programa. Si la edad es mayor o igual a 18 años, se multiplica por dos y se asigna al puntaje de la pregunta 3.
 */
-void corregir_edad_mayor_18_pregunta_3(int edad_valida, int *puntos_pregunta3){
+void corregir_edad_mayor_18_pregunta_edad(int edad_valida, int *puntos_pregunta3){
     if(edad_valida < 18){
         *puntos_pregunta3 = NUMERO_DE_FINALIZAR_PROGRAMA;
         printf("-RECHAZADO-\n");
@@ -194,31 +196,21 @@ void corregir_edad_mayor_18_pregunta_3(int edad_valida, int *puntos_pregunta3){
 }
 
 //pregunta 4
-/*
-    PRE: La respuesta ingresada debe ser un número entero.
-    POS: se valida infinitamente el ingreso del entero hasta que el usuario ingrese un número entero válido. Se devuelve el número entero ingresado por el usuario una vez termine el ciclo de validación.
-*/
-int validar_respuesta_int_pregunta_4(int respuesta_ingresada_int){
-    bool valido = false;
-    while(!valido){
-        
-        if((scanf("%i", &respuesta_ingresada_int)!= 1){
-            printf("Debes ingresar un número entero... intente devuelta:\n");
-        }
-        else valido = true;
-    }
-    return respuesta_ingresada_int;
+void preguntar_pregunta_donas(int *respuesta_ingresada_int){
+    printf("\n¿Cuántas donas estaría dispuesto a sacrificar para el Número Uno?:\n");
+    scanf("%i", respuesta_ingresada_int);
 }
+
 /*
     PRE: La respuesta ingresada debe ser un número entero válido.
     POS: se valida infinitamente el rango ( 0-12 ) del número ingresado por el usuario, hasta que el usuario ingrese un número dentro del rango. Se devuelve el número entero ingresado por el usuario una vez termine el ciclo de validación. En el caso de no ingresar un número valido, se el pide que vuelva a ingresar un número, y se valida nuevamente para evitar errores.
 */
-int validar_respuesta_rango_pregunta_4(int respuesta_ingresada_int){
+int validar_respuesta_rango_pregunta_donas(int respuesta_ingresada_int){
     bool valido = false;
     while(!valido){
         if(respuesta_ingresada_int < 0 || respuesta_ingresada_int > 12){
             printf("El número debe estar en el rango de 0 a 12!");
-            respuesta_ingresada_int = validar_respuesta_int_pregunta_4(respuesta_ingresada_int);
+            respuesta_ingresada_int = validar_respuesta_int_pregunta_donas(respuesta_ingresada_int);
         }
         else valido = true;
     }
@@ -228,7 +220,7 @@ int validar_respuesta_rango_pregunta_4(int respuesta_ingresada_int){
     PRE: La respuesta ingresada debe ser un número entero válido dentro del rango de 0 a 12.
     POS: Según el número de donas ingresado por el usuario, se asigna una cantidad de puntos determinada. 
 */
-void corregir_respuesta_pregunta_4(int respuesta_ingresada_int, int *puntos_pregunta4){
+void corregir_respuesta_pregunta_donas(int respuesta_ingresada_int, int *puntos_pregunta4){
     if(respuesta_ingresada_int == 0){
         *puntos_pregunta4 = PUNTOS_MINIMOS_DONAS;
     }
@@ -283,28 +275,28 @@ int main() {
     int edad = 0;
     
     //pregunta 1
-    preguntar_pregunta_1(&respuesta_ingresada_char)
+    preguntar_pregunta_fundador(&respuesta_ingresada_char)
     respuesta_ingresada_char = validar_respuesta_char_4_opciones(respuesta_ingresada_char);
-    corregir_respuesta_pregunta_1(respuesta_ingresada_char, JEBEDIAH, &puntos_pregunta1);
+    corregir_respuesta_pregunta_fundador(respuesta_ingresada_char, JEBEDIAH, &puntos_pregunta1);
     
     if(puntos_pregunta1 != NUMERO_DE_FINALIZAR_PROGRAMA){
         //pregunta 2
-        
-        respuesta_validez_bool = identificar_respuesta_bool_pregunta_3(respuesta_ingresada_char);
-        sumar_puntos_respuesta_bool_pregunta_2(respuesta_validez_bool, &puntos_pregunta2);
+        preguntar_pregunta_secreto(&respuesta_ingresada_char);
+        respuesta_validez_bool = identificar_respuesta_bool_pregunta_secreto(respuesta_ingresada_char);
+        sumar_puntos_respuesta_bool_pregunta_secreto(respuesta_validez_bool, &puntos_pregunta2);
     
         //pregunta 3
         printf("\n¿Cuál es su fecha de nacimiento? (formato: yyyy/mm): \n");
         validar_rango_fecha_ingresada(&anio, &mes);
         calcular_edad(anio, mes, &edad);
-        corregir_edad_mayor_18_pregunta_3(edad, &puntos_pregunta3);
+        corregir_edad_mayor_18_pregunta_edad(edad, &puntos_pregunta3);
         
         if(puntos_pregunta3 != NUMERO_DE_FINALIZAR_PROGRAMA){
             //pregunta 4
-            printf("\n¿Cuántas donas estaría dispuesto a sacrificar para el Número Uno?:\n");
-            respuesta_ingresada_int=validar_respuesta_int_pregunta_4(respuesta_ingresada_int);
-            respuesta_ingresada_int=validar_respuesta_rango_pregunta_4(respuesta_ingresada_int);
-            corregir_respuesta_pregunta_4(respuesta_ingresada_int, &puntos_pregunta4);
+            preguntar_pregunta_donas(&respuesta_ingresada_int);
+            respuesta_ingresada_int=validar_respuesta_int_pregunta_donas(respuesta_ingresada_int);
+            respuesta_ingresada_int=validar_respuesta_rango_pregunta_donas(respuesta_ingresada_int);
+            corregir_respuesta_pregunta_donas(respuesta_ingresada_int, &puntos_pregunta4);
             //FINAL
             determinar_tipo_mago(puntos_pregunta1, puntos_pregunta2, puntos_pregunta3, puntos_pregunta4);
         }    
