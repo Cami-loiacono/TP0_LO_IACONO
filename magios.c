@@ -125,7 +125,6 @@ void sumar_puntos_respuesta_bool_pregunta_secreto(bool respuesta_validez_bool, i
         *puntos_pregunta2 = PUNTAJE_A_SUMAR_PREGUNTA_2;
     }
     else *puntos_pregunta2 = -(PUNTAJE_A_RESTAR_PREGUNTA_2);
-    printf("PUNTAJE PREGUNTA 2: %i\n", *puntos_pregunta2);
 }
 //pregunta 3
 /*
@@ -159,10 +158,10 @@ void validar_rango_fecha_ingresada(int* anio, int* mes){
         else if((*anio > ANIO_MAXIMO_DIGITOS) || (*anio < ANIO_MINIMO_DIGITOS)){
             printf("El año debe ser de 4 digitos!\nIntente devuelta:  ");
         }           
-        else if( (*anio == ANIO_MINIMO) && (*mes < MES_MINIMO_ANIO) || (*anio < ANIO_MINIMO) ){
+        else if( (*anio == ANIO_MINIMO && *mes < MES_MINIMO_ANIO) || (*anio < ANIO_MINIMO) ){
             printf("La fecha a ingresar no puede ser anterior a 1926/03...\nIntente devuelta:  ");
         }
-        else if((*mes <= 0)|| (*mes > 12)){
+        else if(*mes <= 0 || *mes > 12){
             printf("Asegúrese que el mes debe estar en el rango del mes 1 al 12!\nIntente devuelta: ");
         } 
         else if(((*anio == ANIO_ACTUAL) && (*mes > MES_ACTUAL)) || (*anio > ANIO_ACTUAL)){
@@ -304,4 +303,3 @@ int main() {
         }    
     }
 }
-
